@@ -1,6 +1,6 @@
 FROM flywheel/matlab-mcr:v93
 
-MAINTAINER Michael Perry <lmperry@stanford.edu>
+MAINTAINER Garikoitz Lerma-Usabiaga <glerma@stanford.edu>
 
 
 # Make directory for flywheel spec (v0)
