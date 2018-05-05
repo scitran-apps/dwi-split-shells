@@ -1,13 +1,13 @@
-function [] = shellsplit(bvecPath, bvalPath, dwiPath, outputPath)
+function [] = dwisplitshells(bvecPath, bvalPath, dwiPath, outputPath)
 if ~exist(outputPath)
     outputPath = fileparts(dwiPath);
 end
 
 % Local data for testing
 %{
-    bvecPath = 'testdata/bvec/101915_dwi.bvec';
-    bvalPath = 'testdata/bval/101915_dwi.bval';
-    dwiPath  = 'testdata/dwi/101915_dwi.nii.gz';
+    bvecPath = 'local/testdata/bvec/101915_dwi.bvec';
+    bvalPath = 'local/testdata/bval/101915_dwi.bval';
+    dwiPath  = 'local/testdata/dwi/101915_dwi.nii.gz';
 %}
 
 % Read the files according the provided path
@@ -65,5 +65,5 @@ for ii = 1:length(paramsShells)
 end
 
 % For future reference, compiled used the following command:
-% mcc -m shellsplit.m
+% mcc -m dwisplitshells.m
 

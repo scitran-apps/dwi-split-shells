@@ -3,7 +3,7 @@
 # Run dtiinit-demo
 #
 
-CONTAINER="[scitran/shellsplit]"
+CONTAINER="[scitran/dwi-split-shells]"
 
 # Built to flywheel-v0 spec.
 FLYWHEEL_BASE=/flywheel/v0
@@ -25,7 +25,7 @@ dwiFile=$(find $FLYWHEEL_BASE/input/dwi/ -type f -name "*.nii*")
 
 
 # Run the Matlab executable 
-/msa/shellsplit "$bvecFile" "$bvalFile" "$dwiFile" "$OUTPUT_DIR"
+/msa/dwisplitshells "$bvecFile" "$bvalFile" "$dwiFile" "$OUTPUT_DIR"
 
 
 
