@@ -25,7 +25,7 @@ dwiFile=$(find $FLYWHEEL_BASE/input/dwi/ -type f -name "*.nii*")
 
 
 # Run the Matlab executable 
-./msa/shellsplit "$bvecFile" "$bvalFile" "$dwiFile" "$OUTPUT_DIR"
+/msa/shellsplit "$bvecFile" "$bvalFile" "$dwiFile" "$OUTPUT_DIR"
 
 
 
