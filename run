@@ -7,6 +7,7 @@ CONTAINER="[scitran/shellsplit]"
 
 # Built to flywheel-v0 spec.
 FLYWHEEL_BASE=/flywheel/v0
+MCR_ROOT=/opt/mcr/v93/
 
 # Make sure that /output directory is empty (all content will be removed later).
 OUTPUT_DIR=$FLYWHEEL_BASE/output
@@ -25,7 +26,7 @@ dwiFile=$(find $FLYWHEEL_BASE/input/dwi/ -type f -name "*.nii*")
 
 
 # Run the Matlab executable 
-/msa/shellsplit "$bvecFile" "$bvalFile" "$dwiFile" "$OUTPUT_DIR"
+/msa/run_shellsplit.sh "$MCR_ROOT" "$bvecFile" "$bvalFile" "$dwiFile" "$OUTPUT_DIR"
 
 
 
