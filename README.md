@@ -1,6 +1,4 @@
 # scitran/dwi-split-shells
 
-## Build docker container
-
-`docker build -t dwi-split-shells .`
-
+## Build Docker Image
+`docker build -t scitran/dwi-split-shells .`
