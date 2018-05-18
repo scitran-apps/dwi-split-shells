@@ -1,4 +1,9 @@
-function [] = dwisplitshells(bvecPath, bvalPath, dwiPath, outputPath)
+function [] = dwisplitshells(bvecPath, bvalPath, dwiPath, ...
+                             doNorm, ...
+                             outputPath)
+if ~exist(doNorm)
+    doNorm = 1;
+end
 if ~exist(outputPath)
     outputPath = fileparts(dwiPath);
 end
@@ -24,7 +29,6 @@ if strcmp(dwiFileExt,'.gz')
     dwiFileName = tmp{1};
     dwiFileExt  = ['.' tmp{2} dwiFileExt];
 end
-
 
 % Determine shell
 roundedBval  = 100 * round(bvals/100);
@@ -54,7 +58,13 @@ for ii = 1:length(paramsShells)
                         [dwiFileName '_' num2str(paramsShells(ii)) dwiFileExt]);
 
     % Write the files back
-    dlmwrite(bvalName, bvals(all_index), 'delimiter',' ');
+    % Maintain the bValues or normalize depending on the doNorm parameter
+    % By default it will normalize since vistasoft needs it normalized
+    if doNorm
+        dlmwrite(bvalName, roundedBval(all_index), 'delimiter',' ');
+    else
+        dlmwrite(bvalName,       bvals(all_index), 'delimiter',' ');
+    end
     dlmwrite(bvecName, bvecs(:,all_index)     );
     dwi_oneshell = dwi;
     
