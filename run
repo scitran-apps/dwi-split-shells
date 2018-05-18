@@ -24,14 +24,28 @@ fi
 bvecFile=$(find $FLYWHEEL_BASE/input/bvec/ -type f -name "*.bvec*")
 bvalFile=$(find $FLYWHEEL_BASE/input/bval/ -type f -name "*.bval*")
 dwiFile=$(find $FLYWHEEL_BASE/input/dwi/ -type f -name "*.nii*")
-doNorm=1
-
+CONFIG_FILE=${FLYWHEEL_BASE}/config.json
 
 # Check for required inputs
 if [[ -z "$bvecFile" ]] ||  [[ -z "$bvalFile" ]] || [[ -z "$dwiFile" ]]; then
   echo -e "$CONTAINER  One or more input files were not found! Exiting!"
   exit 1
 fi
+
+
+# Parse Config File
+  if [[ -f $CONFIG_FILE ]]; then
+    # Parse config from config.json
+    echo "Loading configuration from ${CONFIG_FILE}"
+    doNorm=$(cat $CONFIG_FILE | jq -r '.config.doNorm')
+  else
+    # Parse defaults from the manifest.json
+    CONFIG_FILE=$FLYWHEEL_BASE/manifest.json
+    echo "Loading defaults from ${CONFIG_FILE}"
+    doNorm=$(cat $CONFIG_FILE | jq -r '.config.doNorm.default')
+  fi
+
+
 
 
 # Run the Matlab executable

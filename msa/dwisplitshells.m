@@ -2,7 +2,7 @@ function [] = dwisplitshells(bvecPath, bvalPath, dwiPath, ...
                              doNorm, ...
                              outputPath)
 if ~exist(doNorm)
-    doNorm = 1;
+    doNorm = true;
 end
 if ~exist(outputPath)
     outputPath = fileparts(dwiPath);
