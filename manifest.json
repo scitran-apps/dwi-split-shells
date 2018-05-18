@@ -1,14 +1,17 @@
 {
   "name": "dwi-split-shells",
   "label": "SCITRAN: DWI Split Shells",
-  "description": "Extracts individual shells from multi-shell DWI images. Automatically outputs a NIfTI, BVEC, and BVAL file for each shell.",
+  "description": "Extract individual diffusion shells from multi-shell DWI data. Output includes a NIfTI, BVEC, and BVAL file for each diffusion shell found in the data.",
   "author": "GLU <glerma@stanford.edu>",
   "maintainer": "GLU <glerma@stanford.edu>",
   "url": "https://github.com/scitran-apps/dwi-split-shells",
   "source": "https://github.com/scitran-apps/dwi-split-shells",
   "license": "MIT",
   "flywheel": "0",
-  "version": "1.0.0",
+  "version": "1.1.1",
+  "custom": {
+    "docker-image": "scitran/dwi-split-shells:1.1.1"
+  },
   "config": {
     "doNorm": {
       "default": true,
@@ -16,13 +19,10 @@
       "description": "Normalize the bValues. (true/false, default=true)"
     }
   },
-  "custom": {
-    "docker-image": "scitran/dwi-split-shells:1.0.0"
-  },
   "inputs": {
     "bval": {
       "base": "file",
-      "description": "Include the dwi.bvals multishell file.",
+      "description": "Multi-Shell BVAL text file.",
       "type": {
         "enum": [
           "bval"
@@ -31,7 +31,7 @@
     },
     "bvec": {
       "base": "file",
-      "description": "Include the dwi.bvecs multishell file.",
+      "description": "Multi-Shell BVAL text file.",
       "type": {
         "enum": [
           "bvec"
@@ -40,7 +40,7 @@
     },
     "dwi": {
       "base": "file",
-      "description": "Include the dwi.nii.gz multishell file.",
+      "description": "Multi-Shell DWI NIfTI file.",
       "type": {
         "enum": [
           "nifti"

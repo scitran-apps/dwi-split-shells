@@ -1,33 +1,49 @@
 #! /bin/bash
 #
-# Run dtiinit-demo
 #
 
 CONTAINER="[scitran/dwi-split-shells]"
+echo -e "$CONTAINER  Initiated"
+
 
 # Built to flywheel-v0 spec.
 FLYWHEEL_BASE=/flywheel/v0
 MCR_ROOT=/opt/mcr/v93/
-
-# Make sure that /output directory is empty (all content will be removed later).
 OUTPUT_DIR=$FLYWHEEL_BASE/output
 
-echo -e "$CONTAINER  Initiated"
 
+# Make sure that /output directory exists
 if [[ ! -d "$OUTPUT_DIR" ]]
     then
         echo "$CONTAINER  $OUTPUT_DIR not found!"
         exit 1
 fi
 
+
+# Set paths to input files
 bvecFile=$(find $FLYWHEEL_BASE/input/bvec/ -type f -name "*.bvec*")
 bvalFile=$(find $FLYWHEEL_BASE/input/bval/ -type f -name "*.bval*")
 dwiFile=$(find $FLYWHEEL_BASE/input/dwi/ -type f -name "*.nii*")
+doNorm=1
 
 
-# Run the Matlab executable 
-/msa/run_dwisplitshells.sh "$MCR_ROOT" "$bvecFile" "$bvalFile" "$dwiFile" "1" "$OUTPUT_DIR"
+# Check for required inputs
+if [[ -z "$bvecFile" ]] ||  [[ -z "$bvalFile" ]] || [[ -z "$dwiFile" ]]; then
+  echo -e "$CONTAINER  One or more input files were not found! Exiting!"
+  exit 1
+fi
 
+
+# Run the Matlab executable
+/msa/run_dwisplitshells.sh "$MCR_ROOT" "$bvecFile" "$bvalFile" "$dwiFile" "$doNorm"  "$OUTPUT_DIR"
+
+
+# Check exit status
+exit_status=$?
+if [[ $exit_status != 0 ]]; then
+  echo -e "$CONTAINER  An error occurred during execution of the Matlab executable. Exiting!"
+  exit 1
+fi
 
 
 # Get a list of the files in the output directory
@@ -35,22 +51,19 @@ outputs=$(find $OUTPUT_DIR/* -maxdepth 0 -type f)
 
 
 # If outputs exist, generate metadata, and exit
-if [[ -z $outputs ]]
-    then
-        echo "$CONTAINER  No results found in output directory... Exiting"
-        exit 1
-    else
-        cd $OUTPUT_DIR
-        echo -e "$CONTAINER  Wrote: `ls`"
-        echo -e "$CONTAINER  Done!"
+if [[ -z $outputs ]]; then
+  echo "$CONTAINER  No results found in output directory... Exiting"
+  exit 1
+else
+  cd $OUTPUT_DIR
+  echo -e "$CONTAINER  Wrote: `ls`"
+  echo -e "$CONTAINER  Done!"
 fi
 
 
-
+# Handle permissions of the outputs
 chmod -R 777 $OUTPUT_DIR
 
 
+# Exit
 exit 0
-
-
-
