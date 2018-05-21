@@ -34,22 +34,22 @@ fi
 
 
 # Parse Config File
-  if [[ -f $CONFIG_FILE ]]; then
-    # Parse config from config.json
-    echo "Loading configuration from ${CONFIG_FILE}"
-    doNorm=$(cat $CONFIG_FILE | jq -r '.config.doNorm')
-  else
-    # Parse defaults from the manifest.json
-    CONFIG_FILE=$FLYWHEEL_BASE/manifest.json
-    echo "Loading defaults from ${CONFIG_FILE}"
-    doNorm=$(cat $CONFIG_FILE | jq -r '.config.doNorm.default')
-  fi
-
-
+if [[ -f $CONFIG_FILE ]]; then
+  # Parse config from config.json
+  echo -e "$CONTAINER  Loading configuration from ${CONFIG_FILE}"
+  doNorm=$(cat $CONFIG_FILE | jq -r '.config.doNorm')
+  echo "$CONTAINER  BVALUE normalization has been set to $doNorm"
+else
+  # Parse defaults from the manifest.json
+  CONFIG_FILE=$FLYWHEEL_BASE/manifest.json
+  echo -e "$CONTAINER  Loading defaults from ${CONFIG_FILE}"
+  doNorm=$(cat $CONFIG_FILE | jq -r '.config.doNorm.default')
+  echo "$CONTAINER  BVALUE normalization has been set to $doNorm"
+fi
 
 
 # Run the Matlab executable
-/msa/run_dwisplitshells.sh "$MCR_ROOT" "$bvecFile" "$bvalFile" "$dwiFile" "$doNorm"  "$OUTPUT_DIR"
+time /msa/run_dwisplitshells.sh "$MCR_ROOT" "$bvecFile" "$bvalFile" "$dwiFile" "$doNorm"  "$OUTPUT_DIR"
 
 
 # Check exit status
