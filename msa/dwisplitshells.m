@@ -76,4 +76,6 @@ end
 
 % For future reference, compiled used the following command:
 % mcc -m dwisplitshells.m
+% Nothing in startup.m and nii_tool.m in the same folder as dwisplitshells.m file
+
 
