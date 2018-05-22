@@ -1,9 +1,13 @@
 function [] = dwisplitshells(bvecPath, bvalPath, dwiPath, ...
                              doNorm, ...
                              outputPath)
-if ~exist(doNorm)
+                         
+if ~exist(doNorm)  | strcmp(doNorm, 'true')
     doNorm = true;
+else
+    doNorm = false;
 end
+
 if ~exist(outputPath)
     outputPath = fileparts(dwiPath);
 end
@@ -60,9 +64,12 @@ for ii = 1:length(paramsShells)
     % Write the files back
     % Maintain the bValues or normalize depending on the doNorm parameter
     % By default it will normalize since vistasoft needs it normalized
+    
     if doNorm
+        fprintf('The bVals will be normalized.\n', doNorm)
         dlmwrite(bvalName, roundedBval(all_index), 'delimiter',' ');
     else
+        fprintf('The bVals will NOT be normalized. \n', doNorm)
         dlmwrite(bvalName,       bvals(all_index), 'delimiter',' ');
     end
     dlmwrite(bvecName, bvecs(:,all_index)     );

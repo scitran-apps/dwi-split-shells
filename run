@@ -24,7 +24,7 @@ fi
 bvecFile=$(find $FLYWHEEL_BASE/input/bvec/ -type f -name "*.bvec*")
 bvalFile=$(find $FLYWHEEL_BASE/input/bval/ -type f -name "*.bval*")
 dwiFile=$(find $FLYWHEEL_BASE/input/dwi/ -type f -name "*.nii*")
-CONFIG_FILE=${FLYWHEEL_BASE}/config.json
+CONFIG_FILE=${FLYWHEEL_BASE}/input/config.json
 
 # Check for required inputs
 if [[ -z "$bvecFile" ]] ||  [[ -z "$bvalFile" ]] || [[ -z "$dwiFile" ]]; then
@@ -49,7 +49,7 @@ fi
 
 
 # Run the Matlab executable
-/msa/run_dwisplitshells.sh "$MCR_ROOT" "$bvecFile" "$bvalFile" "$dwiFile" "$doNorm"  "$OUTPUT_DIR"
+/msa/run_dwisplitshells.sh "${MCR_ROOT}" "${bvecFile}" "${bvalFile}" "${dwiFile}" "${doNorm}"  "${OUTPUT_DIR}"
 
 
 # Check exit status
